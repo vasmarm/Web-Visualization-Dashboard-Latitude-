@@ -26,7 +26,7 @@
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
             crossorigin="anonymous">
         </script>
-
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" 
                 integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" 
@@ -84,10 +84,13 @@
                                 <div class="panel-body">
                                     <h2>Summary: Latitude and Longitude</h2>
                                     <hr>
-                                    <img class = "img-responsive" src="Images/City_Latitude-VS-Max_Temperature-06-01-18).png" 
+                                    
+                                        <img class = "img-responsive" 
+                                        title="Temperature vs Latitude"
+                                        src="Images/City_Latitude-VS-Max_Temperature-06-01-18).png" 
                                         style="width:40%; float: left; margin: 5px;" 
                                         alt="first image" >
-                
+                                        
                                     <p>     The purpose of this analysis was to identify trends in weather patterns as they relate to latitude.  
                                         It was completed by randomly generating 1500 possible values for both latitude and longitude.
                                         The Python library citypy was used to generate city names closest to the randomized latitude and longitude.  
@@ -97,6 +100,11 @@
                                         <br>
                                         The graph shows the location of the cities analyzed.  The color of each point represents temperature with green and red representing the lowest and highest average temperature respectively.  
                                     </p>
+                                    <div class="hover_img">
+                                            <a href="#"><i>Enlarge Image</i><span>
+                                            <img src="Images/City_Latitude-VS-Max_Temperature-06-01-18).png" 
+                                            alt="image" height="600" /></span></a>
+                                       </div>
                                 </div>
                             </div>
                         </div>
@@ -127,5 +135,26 @@
         <footer>
                 <p style = "text-align: center"><i class="glyphicon glyphicon-copyright-mark"> Vashisth Sharma Data Science Bootcamp 2018</i></p>      
         </footer> 
+        <script>
+                function arrayToTable(tableData) {
+                var table = $('<table></table>');
+                $(tableData).each(function (i, rowData) {
+                    var row = $('<tr></tr>');
+                    $(rowData).each(function (j, cellData) {
+                        row.append($('<td>'+cellData+'</td>'));
+                    });
+                    table.append(row);
+                });
+                return table;
+                }
+                var data = Papa.parse(data).data;
+                $.ajax({
+                    type: "GET",
+                    url: "Resources/cities.csv",
+                    success: function (data) {
+                        $('body').append(arrayToTable(Papa.parse(data).data));
+                    }
+                    });
+        </script>
     </body>
 </html>
